@@ -1,0 +1,15 @@
+query GetRepositories($first: Int, $after: String) {
+  viewer {
+    repositories(first: $first, after: $after) {
+      totalCount
+      nodes {
+        name
+        isPrivate
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["es2023"],
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "target": "es2022",
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "exactOptionalPropertyTypes": true
+  }
+}

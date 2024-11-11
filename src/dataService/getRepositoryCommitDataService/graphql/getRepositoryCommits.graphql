@@ -1,0 +1,37 @@
+query GetRepositoryCommits(
+  $name: String!
+  $qualifiedName: String!
+  $first: Int
+  $after: String
+) {
+  viewer {
+    repository(name: $name) {
+      ref(qualifiedName: $qualifiedName) {
+        target {
+          ... on Commit {
+            history(first: $first, after: $after) {
+              totalCount
+              nodes {
+                repository {
+                  name
+                }
+                commitUrl
+                message
+                author {
+                  name
+                }
+                committedDate
+                additions
+                deletions
+              }
+              pageInfo {
+                endCursor
+                hasNextPage
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
