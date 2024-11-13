@@ -3,7 +3,7 @@ import {
   type GetRepositoriesQueryVariables,
   type GetRepositoriesQuery,
   GetRepositories,
-} from '../../types'
+} from '../../../types'
 import type { Repository } from './request'
 import type { RepositoryResponse } from './response'
 import dotenv from 'dotenv'

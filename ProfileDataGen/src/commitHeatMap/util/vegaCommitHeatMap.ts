@@ -26,8 +26,11 @@ export async function vegaCommitHeatmap(
   if (isDebugMode)
     console.log('\rcsvDayHourCountOutput:', csvDayHourCountOutput)
 
-  fs.mkdirSync('DataVisuals/temp', { recursive: true })
-  fs.writeFileSync('DataVisuals/temp/commit-heatmap.csv', csvDayHourCountOutput)
+  fs.mkdirSync('ProfileDataGen/DataVisuals/temp', { recursive: true })
+  fs.writeFileSync(
+    'ProfileDataGen/DataVisuals/temp/commit-heatmap.csv',
+    csvDayHourCountOutput
+  )
 
   const vgJSON = `
 {
@@ -201,11 +204,14 @@ export async function vegaCommitHeatmap(
 
 `
 
-  fs.mkdirSync('DataVisuals/temp', { recursive: true })
-  fs.writeFileSync('DataVisuals/temp/commit-heatmap.vg.json', vgJSON)
+  fs.mkdirSync('ProfileDataGen/DataVisuals/temp', { recursive: true })
+  fs.writeFileSync(
+    'ProfileDataGen/DataVisuals/temp/commit-heatmap.vg.json',
+    vgJSON
+  )
 
   const output = await execAsync(
-    `vg2png DataVisuals/temp/commit-heatmap.vg.json DataVisuals/commit_heatmap.png`
+    `vg2png ProfileDataGen/DataVisuals/temp/commit-heatmap.vg.json ProfileDataGen/DataVisuals/commit_heatmap.png`
   )
 
   if (isDebugMode) console.log('output:', output)

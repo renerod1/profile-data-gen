@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 #
-schema.generated.graphql
-src/types.ts
+ProfileDataGen/schema.generated.graphql
+ProfileDataGen/types.ts
