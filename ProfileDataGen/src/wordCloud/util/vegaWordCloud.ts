@@ -106,11 +106,11 @@ export async function vegaWordCloud(words: string): Promise<void> {
 
 `
 
-  fs.mkdirSync('ProfileDataGen/DataVisuals/temp', { recursive: true })
-  fs.writeFileSync('ProfileDataGen/DataVisuals/temp/word-cloud.vg.json', vgJSON)
+  fs.mkdirSync('ProfileDataGen/../DataVisuals/temp', { recursive: true })
+  fs.writeFileSync('ProfileDataGen/../DataVisuals/temp/word-cloud.vg.json', vgJSON)
 
   const output = await execAsync(
-    `vg2png ProfileDataGen/DataVisuals/temp/word-cloud.vg.json ProfileDataGen/DataVisuals/wordcloud.png`
+    `vg2png ProfileDataGen/../DataVisuals/temp/word-cloud.vg.json ProfileDataGen/../DataVisuals/wordcloud.png`
   )
 
   if (isDebugMode) console.log('output:', output)

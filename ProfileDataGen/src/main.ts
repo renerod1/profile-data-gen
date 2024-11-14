@@ -42,4 +42,4 @@ if (enableCommitHeatmap) {
 }
 
 // Clean up temp directory
-fs.rmSync('ProfileDataGen/DataVisuals/temp', { recursive: true, force: true })
+fs.rmSync('ProfileDataGen/../DataVisuals/temp', { recursive: true, force: true })
