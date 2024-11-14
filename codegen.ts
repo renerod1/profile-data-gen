@@ -8,16 +8,16 @@ dotenv.config({ path: envPath })
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.GITHUB_GQL_SCHEMA,
-  documents: ['./ProfileDataGen/src/**/*.graphql'],
+  documents: ['./src/**/*.graphql'],
   generates: {
-    './ProfileDataGen/schema.generated.graphql': {
+    './schema.generated.graphql': {
       plugins: ['schema-ast'],
       config: {
         descriptions: true,
         schemaDescription: true,
       },
     },
-    './ProfileDataGen/types.ts': {
+    './src/types.ts': {
       plugins: [
         'typescript',
         'typescript-document-nodes',

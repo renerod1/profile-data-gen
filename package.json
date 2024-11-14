@@ -5,12 +5,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "codegen": "graphql-codegen --config ./ProfileDataGen/codegen.ts",
+    "codegen": "graphql-codegen --config ./codegen.ts",
     "commit": "git-cz",
     "format": "prettier . --write --ignore-path .gitignore && git update-index --again",
     "prepare": "husky",
-    "start": "tsx --env-file=./ProfileDataGen/src/environments/.env ./ProfileDataGen/src/main.ts",
-    "start:local": "tsx --env-file=./ProfileDataGen/src/environments/.env.local ./ProfileDataGen/src/main.ts",
+    "start": "tsx --env-file=./src/environments/.env ./src/main.ts",
+    "start:local": "tsx --env-file=./src/environments/.env.local ./src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

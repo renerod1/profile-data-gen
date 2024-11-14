@@ -3,7 +3,7 @@ import {
   type GetRepositoryCommitsQueryVariables,
   type GetRepositoryCommitsQuery,
   GetRepositoryCommits,
-} from '../../../types'
+} from '../../types'
 import type { Commit } from './request'
 import type { RepositoryCommitResponse } from './response'
 import dotenv from 'dotenv'
