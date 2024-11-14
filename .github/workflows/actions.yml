@@ -1,0 +1,89 @@
+name: Run Scripts For Data Gathering and Generation
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      
+      - name: Checkout profile-data-gen repository
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git clone https://github.com/renerod1/profile-data-gen.git
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+
+      
+      - name: Move files from profile-data-gen to current repository
+        run: |
+          rm -rf ./ProfileDataGen
+          mv -f profile-data-gen/ProfileDataGen ./
+          mv -f profile-data-gen/package.json ./
+          mv -f profile-data-gen/tsconfig.json ./
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install GraphQL
+        env:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm codegen
+
+      - name: Run Script
+        env:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm start
+        
+      - name: Remove profile-data-gen
+        run: |
+          rm -rf profile-data-gen 
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "Updated data" --allow-empty
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
