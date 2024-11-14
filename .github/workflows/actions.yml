@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+        
       - name: Checkout profile-data-gen repository
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
@@ -25,6 +25,16 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git clone https://github.com/renerod1/profile-data-gen.git profile-data-gen
+
+      - name: Move files from profile-data-gen to current repository
+        run: |
+          rm -rf ./src
+          mv -f profile-data-gen/src ./
+          mv -f profile-data-gen/codegen.ts ./
+          mv -f profile-data-gen/package-lock.json ./
+          mv -f profile-data-gen/package.json ./
+          mv -f profile-data-gen/pnpm-lock.yaml ./
+          mv -f profile-data-gen/tsconfig.json ./
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -50,7 +60,7 @@ jobs:
 
       - name: Run Script
         run: pnpm start
-
+        
       - name: Remove profile-data-gen
         run: |
           rm -rf profile-data-gen
