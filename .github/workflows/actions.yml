@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Checkout profile-data-gen repository
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
@@ -60,7 +60,7 @@ jobs:
 
       - name: Run Script
         run: pnpm start
-        
+
       - name: Remove profile-data-gen
         run: |
           rm -rf profile-data-gen

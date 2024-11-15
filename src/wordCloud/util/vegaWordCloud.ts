@@ -9,8 +9,8 @@ const isDebugMode = process.env.DEBUG_MODE == 'true'
 const execAsync = promisify(exec)
 
 export async function vegaWordCloud(words: string): Promise<void> {
-  const width = 1200
-  const height = 800
+  const width = Number.parseInt(process.env.IMAGE_WIDTH ?? '1200')
+  const height = Number.parseInt(process.env.IMAGE_HEIGHT ?? '800')
   const stopwords = process.env.IGNORED_WORDS?.replaceAll(',', '|') ?? ''
 
   const vgJSON = `

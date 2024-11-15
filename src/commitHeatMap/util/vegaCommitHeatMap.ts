@@ -17,8 +17,8 @@ export interface HeatMapDict {
 export async function vegaCommitHeatmap(
   heatMapDict: HeatMapDict
 ): Promise<void> {
-  const width = 1200
-  const height = 800
+  const width = Number.parseInt(process.env.IMAGE_WIDTH ?? '1200')
+  const height = Number.parseInt(process.env.IMAGE_HEIGHT ?? '800')
 
   if (isDebugMode) console.log('\rheatMapDict:', heatMapDict)
 

@@ -4,6 +4,7 @@ import { getRepoCommitsList } from './repositoryCommitList'
 import { getRepositoryList } from './repositoryList'
 import { vegaCommitHeatmap } from './commitHeatMap/util/vegaCommitHeatMap'
 import { vegaWordCloud } from './wordCloud/util/vegaWordCloud'
+import { generateAnimatedGif } from './animateImages'
 import dotenv from 'dotenv'
 import fs from 'fs'
 
@@ -40,6 +41,10 @@ if (enableCommitHeatmap) {
   await vegaCommitHeatmap(heatMapDict)
   console.log('Create Commit Heatmap - Complete')
 }
+
+// Create Animated Image
+await generateAnimatedGif()
+console.log('Create Animated Image - Complete')
 
 // Clean up temp directory
 fs.rmSync('DataVisuals/temp', { recursive: true, force: true })
