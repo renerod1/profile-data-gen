@@ -11,7 +11,7 @@ export async function generateAnimatedGif() {
   if (isDebugMode) console.log('images:', images)
 
   let inputImages: string[] = []
-  const outputImage = 'DataVisuals/' + 'image.gif'
+  const outputImage = 'DataVisuals/' + 'data.gif'
 
   for (const image of images) {
     if (!fs.existsSync(image)) {
