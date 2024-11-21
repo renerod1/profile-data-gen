@@ -15,6 +15,7 @@ const config: CodegenConfig = {
       config: {
         descriptions: true,
         schemaDescription: true,
+        includeDirectives: true,
       },
     },
     './src/types.ts': {

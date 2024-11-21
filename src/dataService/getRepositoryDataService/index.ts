@@ -5,7 +5,6 @@ import {
   GetRepositories,
 } from '../../types'
 import type { Repository } from './request'
-import type { RepositoryResponse } from './response'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -19,7 +18,7 @@ export const useGetRepos = async () => {
     let after: string = ''
     let variables: GetRepositoriesQueryVariables = {
       first: first,
-      after: after,
+      after: null,
     }
     let allRepositories: Repository[] = []
 
@@ -28,19 +27,20 @@ export const useGetRepos = async () => {
         console.log(
           `first: ${first}, after: ${after}, hasNextPage: ${hasNextPage}`
         )
-      const result: RepositoryResponse =
-        await githubClient().query<GetRepositoriesQuery>({
+      const result = await githubClient()
+        .query<GetRepositoriesQuery>({
           query: GetRepositories,
           variables: variables,
         })
+        .then(response => response.data)
 
       allRepositories = [
         ...allRepositories,
-        ...result.data.viewer.repositories.nodes,
+        ...(result.viewer.repositories.nodes as Repository[]),
       ]
 
-      hasNextPage = result.data.viewer.repositories.pageInfo.hasNextPage
-      after = result.data.viewer.repositories.pageInfo.endCursor
+      hasNextPage = result.viewer.repositories.pageInfo.hasNextPage
+      after = result.viewer.repositories.pageInfo.endCursor ?? ''
       variables = { first: first, after: after }
     }
 

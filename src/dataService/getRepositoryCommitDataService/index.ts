@@ -5,7 +5,6 @@ import {
   GetRepositoryCommits,
 } from '../../types'
 import type { Commit } from './request'
-import type { RepositoryCommitResponse } from './response'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -17,12 +16,12 @@ export const useGetRepoCommits = async (repo: string, branch: string) => {
     let name: string = repo
     let qualifiedName: string = branch
     let first: number = Number.parseInt(process.env.RECORD_LIMITS ?? '100')
-    let after: string = null
+    let after: string = ''
     let variables: GetRepositoryCommitsQueryVariables = {
       name: name,
       qualifiedName: branch,
       first: first,
-      after: after,
+      after: null,
     }
     let allRepositoryCommits: Commit[] = []
 
@@ -31,21 +30,24 @@ export const useGetRepoCommits = async (repo: string, branch: string) => {
         console.log(
           `name: ${name}, qualifiedName: ${qualifiedName}, first: ${first}, after: ${after}, hasNextPage: ${hasNextPage}`
         )
-      const result: RepositoryCommitResponse =
-        await githubClient().query<GetRepositoryCommitsQuery>({
+      const result = await githubClient()
+        .query<GetRepositoryCommitsQuery>({
           query: GetRepositoryCommits,
           variables: variables,
         })
+        .then(response => response.data)
 
       allRepositoryCommits = [
         ...allRepositoryCommits,
-        ...result.data.viewer.repository.ref.target.history.nodes,
+        ...((result.viewer.repository?.ref?.target as Commit).history
+          .nodes as Commit[]),
       ]
 
-      hasNextPage = (result.data.viewer.repository?.ref?.target as Commit)
-        .history.pageInfo.hasNextPage
-      after = (result.data.viewer.repository?.ref?.target as Commit).history
-        .pageInfo.endCursor
+      hasNextPage = (result.viewer.repository?.ref?.target as Commit).history
+        .pageInfo.hasNextPage
+      after =
+        (result.viewer.repository?.ref?.target as Commit).history.pageInfo
+          .endCursor ?? ''
       variables = {
         name: name,
         qualifiedName: branch,
