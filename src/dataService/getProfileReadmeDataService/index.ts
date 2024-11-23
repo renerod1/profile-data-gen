@@ -6,7 +6,6 @@ import {
 } from '../../types'
 import type { Blob } from './request'
 import dotenv from 'dotenv'
-import fs from 'fs'
 
 dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
@@ -14,7 +13,7 @@ const isDebugMode = process.env.DEBUG_MODE == 'true'
 export const useGetProfileReadme = async () => {
   async function getData() {
     let owner: string = process.env.OWNER ?? ''
-    let name: string = process.env.USER ?? ''
+    let name: string = process.env.OWNER ?? ''
     let variables: GetProfileReadmeQueryVariables = {
       owner: owner,
       name: name,
