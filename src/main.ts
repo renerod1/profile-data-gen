@@ -5,8 +5,10 @@ import { getRepositoryList } from './repositoryList'
 import { vegaCommitHeatmap } from './commitHeatMap/util/vegaCommitHeatMap'
 import { vegaWordCloud } from './wordCloud/util/vegaWordCloud'
 import { generateAnimatedGif } from './animateImages'
+import { getProfileReadme } from './profileReadme'
 import dotenv from 'dotenv'
 import fs from 'fs'
+import dayjs from 'dayjs'
 
 dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
@@ -46,5 +48,27 @@ if (enableCommitHeatmap) {
 await generateAnimatedGif()
 console.log('Create Animated Image - Complete')
 
-// Clean up temp directory
+// Clean up datavisuals temp directory
 fs.rmSync('DataVisuals/temp', { recursive: true, force: true })
+
+// Get Base Readme
+const readme = await getProfileReadme()
+console.log('Get Current Profile Readme - Complete')
+
+readme.push('---\n\n')
+
+// Add metrics
+const owner: string = process.env.OWNER ?? ''
+const name: string = process.env.USER ?? ''
+const githubRunId = process.env.GITHUB_RUN_ID
+const timestamp = dayjs().format('YYYY-MM-DD')
+
+readme.push(
+  `### Data last generated on: ${timestamp} via [GitHub Action ${githubRunId}](https://github.com/${owner}/${name}/actions/runs/${githubRunId})\n\n`
+)
+readme.push('![](DataVisuals/data.gif)\n\n')
+
+fs.mkdirSync('Profile', { recursive: true })
+fs.writeFileSync('Profile/README.md', readme.join(''))
+
+console.log('Create Profile Readme - Complete')

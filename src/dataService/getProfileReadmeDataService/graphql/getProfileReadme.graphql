@@ -1,0 +1,9 @@
+query GetProfileReadme($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    object(expression: "HEAD:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+  }
+}
