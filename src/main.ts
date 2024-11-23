@@ -59,12 +59,11 @@ readme.push('---\n\n')
 
 // Add metrics
 const owner: string = process.env.OWNER ?? ''
-const name: string = process.env.USER ?? ''
 const githubRunId = process.env.GITHUB_RUN_ID
 const timestamp = dayjs().format('YYYY-MM-DD')
 
 readme.push(
-  `### Data last generated on: ${timestamp} via [GitHub Action ${githubRunId}](https://github.com/${owner}/${name}/actions/runs/${githubRunId})\n\n`
+  `### Data last generated on: ${timestamp} via [GitHub Action ${githubRunId}](https://github.com/${owner}/${owner}/actions/runs/${githubRunId})\n\n`
 )
 readme.push('![](DataVisuals/data.gif)\n\n')
 
