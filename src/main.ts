@@ -54,7 +54,7 @@ let recent_prs_section = ''
 if (enableMergedPrs) {
   // Get Merged PR Data
   const prs = await getMergedPullRequests()
-  recent_prs_section = prs.join('')
+  recent_prs_section = '\n## 🔀 Recently Merged Pull Requests\n' + prs.join('')
   console.log('Create Merged PR - Complete')
 }
 
