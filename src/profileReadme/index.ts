@@ -1,5 +1,4 @@
 import useGetProfileReadme from '../dataService/getProfileReadmeDataService'
-
 import dotenv from 'dotenv'
 
 dotenv.config()

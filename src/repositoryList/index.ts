@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 const includeProfileRepo = process.env.INCLUDE_PROFILE_REPO == 'true'
-const profileRepo = process.env.USER ?? ''
+const profileRepo = process.env.GITHUB_USER ?? ''
 
 export async function getRepositoryList() {
   const repository: Repository[] = (await useGetRepos()) ?? []

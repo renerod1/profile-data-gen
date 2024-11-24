@@ -12,7 +12,7 @@ export async function getRepoCommitsList(listOfRepos: string[]) {
     for (let index = 0; index < listOfRepos.length; index++) {
       const commitData: Commit[] = await useGetRepoCommits(
         listOfRepos[index],
-        process.env.MAIN_BRANCH ?? 'main'
+        process.env.GITHUB_MAIN_BRANCH ?? 'main'
       )
 
       if (isDebugMode) console.log('commit_data:', JSON.stringify(commitData))

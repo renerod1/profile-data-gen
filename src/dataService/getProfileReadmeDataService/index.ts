@@ -12,8 +12,8 @@ const isDebugMode = process.env.DEBUG_MODE == 'true'
 
 export const useGetProfileReadme = async () => {
   async function getData() {
-    let owner: string = process.env.OWNER ?? ''
-    let name: string = process.env.OWNER ?? ''
+    let owner: string = process.env.GITHUB_OWNER ?? ''
+    let name: string = process.env.GITHUB_USER ?? ''
     let variables: GetProfileReadmeQueryVariables = {
       owner: owner,
       name: name,

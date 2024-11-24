@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 import fs from 'fs'
 
 dotenv.config()
-const isDebugMode = process.env.DEBUG_MODE == 'true'
 const frameDuration = Number.parseInt(process.env.GIF_FRAME_DURATION ?? '10000')
 const width = Number.parseInt(process.env.IMAGE_WIDTH ?? '1200')
 const height = Number.parseInt(process.env.IMAGE_HEIGHT ?? '800')

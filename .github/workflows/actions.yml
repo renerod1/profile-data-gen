@@ -58,16 +58,29 @@ jobs:
         run: |
           echo "GITHUB_TOKEN=${{ secrets.TOKEN }}" >> ./src/environments/.env
 
+      # - name: Turn on debug mode
+      #   run: |
+      #     echo "DEBUG_MODE=true" >> ./src/environments/.env
+
       - name: Run Script
         run: pnpm start
+
+      - name: Move README.md file
+        run: |
+          cp ./Profile/README.md ./README.md
 
       - name: Remove profile-data-gen
         run: |
           rm -rf profile-data-gen
 
+      - name: Remove Profile folder
+        run: |
+          rm -rf Profile
+
       - name: Commit files
         run: |
           git add ./DataVisuals/.
+          git add ./README.md
           git diff-index --quiet HEAD || git commit -m "Updated data" --allow-empty
 
       - name: Push changes

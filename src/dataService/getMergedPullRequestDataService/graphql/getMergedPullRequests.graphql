@@ -1,0 +1,30 @@
+query GetMergedPullRequests($query: String!, $first: Int, $after: String) {
+  search(query: $query, type: ISSUE, first: $first, after: $after) {
+    issueCount
+    edges {
+      node {
+        ... on PullRequest {
+          title
+          url
+          number
+          state
+          merged
+          createdAt
+          closedAt
+          author {
+            login
+          }
+          repository {
+            name
+            url
+            stargazerCount
+          }
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
