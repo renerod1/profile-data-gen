@@ -9,7 +9,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
-const prLimits = Number.parseInt(process.env.PR_LIMITS ?? '5')
+const prLimits = Number.parseInt(process.env.PR_LIMITS ?? '3')
 
 export const useGetMergedPullRequests = async () => {
   async function getData() {

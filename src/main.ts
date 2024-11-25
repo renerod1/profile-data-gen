@@ -7,6 +7,7 @@ import { vegaWordCloud } from './wordCloud/util/vegaWordCloud'
 import { generateAnimatedGif } from './animateImages'
 import { getProfileReadme } from './profileReadme'
 import { getMergedPullRequests } from './mergedPullRequest'
+import { getRecentCommits } from './recentCommits'
 import dayjs from 'dayjs'
 import dotenv from 'dotenv'
 import fs from 'fs'
@@ -15,7 +16,8 @@ dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
 const enableWordCloud = process.env.GENERATE_WORD_CLOUD == 'true'
 const enableCommitHeatmap = process.env.GENERATE_COMMIT_HEATMAP == 'true'
-const enableMergedPrs = process.env.GENERATE_MERGED_PRS == 'true'
+const showRecentCommits = process.env.SHOW_RECENT_COMMITS == 'true'
+const generateMergedPrs = process.env.GENERATE_MERGED_PRS == 'true'
 
 //Get list of Repos
 const listOfRepos = await getRepositoryList()
@@ -50,8 +52,16 @@ if (enableCommitHeatmap) {
 await generateAnimatedGif()
 console.log('Create Animated Image - Complete')
 
+let recent_commit_section = ''
+if (showRecentCommits) {
+  // Get Recent Commits
+  const rcs = await getRecentCommits(listOfRepoCommits)
+  recent_commit_section = '\n## 🚀 Recent Commits\n' + rcs.join('')
+  console.log('Create Recent Commits - Complete')
+}
+
 let recent_prs_section = ''
-if (enableMergedPrs) {
+if (generateMergedPrs) {
   // Get Merged PR Data
   const prs = await getMergedPullRequests()
   recent_prs_section = '\n## 🔀 Recently Merged Pull Requests\n' + prs.join('')
@@ -76,6 +86,7 @@ const timestamp = dayjs().format('YYYY-MM-DD')
 readme.push(
   `### Data last generated on: ${timestamp} via [GitHub Action ${runId}](https://github.com/${owner}/${user}/actions/runs/${runId})\n\n`
 )
+readme.push(recent_commit_section)
 readme.push(recent_prs_section)
 readme.push('\n![](DataVisuals/data.gif)\n\n')
 
