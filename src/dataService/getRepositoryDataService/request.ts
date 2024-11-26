@@ -14,6 +14,7 @@ export interface RepositoryConnection {
 
 export interface Repository {
   name: string
+  isArchived: boolean
   isFork: boolean
   isPrivate: boolean
 }

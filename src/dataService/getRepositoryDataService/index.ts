@@ -49,10 +49,12 @@ export const useGetRepos = async () => {
 
   async function getRepositories() {
     if (isIncludePrivateRepos)
-      return (await getData()).filter(v => v.isFork == false)
+      return (await getData()).filter(
+        v => v.isArchived == false && v.isFork == false
+      )
     else
       return (await getData()).filter(
-        v => v.isFork == false && v.isPrivate == false
+        v => v.isArchived == false && v.isFork == false && v.isPrivate == false
       )
   }
 
