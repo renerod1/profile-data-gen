@@ -1,33 +1,31 @@
 query GetRepositoryCommits(
+  $owner: String!
   $name: String!
-  $qualifiedName: String!
   $first: Int
   $after: String
 ) {
-  viewer {
-    repository(name: $name) {
-      ref(qualifiedName: $qualifiedName) {
-        target {
-          ... on Commit {
-            history(first: $first, after: $after) {
-              totalCount
-              nodes {
-                repository {
-                  name
-                }
-                commitUrl
-                message
-                author {
-                  name
-                }
-                committedDate
-                additions
-                deletions
+  repository(owner: $owner, name: $name) {
+    defaultBranchRef {
+      target {
+        ... on Commit {
+          history(first: $first, after: $after) {
+            totalCount
+            nodes {
+              repository {
+                name
               }
-              pageInfo {
-                endCursor
-                hasNextPage
+              commitUrl
+              message
+              author {
+                name
               }
+              committedDate
+              additions
+              deletions
+            }
+            pageInfo {
+              endCursor
+              hasNextPage
             }
           }
         }

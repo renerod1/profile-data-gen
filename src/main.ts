@@ -18,6 +18,10 @@ const enableWordCloud = process.env.GENERATE_WORD_CLOUD == 'true'
 const enableCommitHeatmap = process.env.GENERATE_COMMIT_HEATMAP == 'true'
 const showRecentCommits = process.env.SHOW_RECENT_COMMITS == 'true'
 const generateMergedPrs = process.env.GENERATE_MERGED_PRS == 'true'
+const owner: string = process.env.GITHUB_OWNER ?? ''
+const user: string = process.env.GITHUB_USER ?? ''
+const runId = process.env.GITHUB_RUN_ID
+const timestamp = dayjs().format('YYYY-MM-DD')
 
 //Get list of Repos
 const listOfRepos = await getRepositoryList()
@@ -78,11 +82,6 @@ console.log('Get Current Profile Readme - Complete')
 readme.push('---\n\n')
 
 // Add metrics
-const owner: string = process.env.GITHUB_OWNER ?? ''
-const user: string = process.env.GITHUB_USER ?? ''
-const runId = process.env.GITHUB_RUN_ID
-const timestamp = dayjs().format('YYYY-MM-DD')
-
 readme.push(
   `### Data last generated on: ${timestamp} via [GitHub Action ${runId}](https://github.com/${owner}/${user}/actions/runs/${runId})\n\n`
 )

@@ -11,8 +11,8 @@ export async function getRepoCommitsList(listOfRepos: string[]) {
   if (listOfRepos.length > 0) {
     for (let index = 0; index < listOfRepos.length; index++) {
       const commitData: Commit[] = await useGetRepoCommits(
-        listOfRepos[index],
-        process.env.GITHUB_MAIN_BRANCH ?? 'main'
+        process.env.GITHUB_OWNER ?? '',
+        listOfRepos[index]
       )
 
       if (isDebugMode) console.log('commit_data:', JSON.stringify(commitData))

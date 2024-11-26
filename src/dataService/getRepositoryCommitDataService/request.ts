@@ -1,13 +1,9 @@
 export interface Query {
-  viewer: User
-}
-
-export interface User {
   repository?: Repository
 }
 
 export interface Repository {
-  ref?: Ref
+  defaultBranchRef?: Ref
 }
 
 export interface Ref {
