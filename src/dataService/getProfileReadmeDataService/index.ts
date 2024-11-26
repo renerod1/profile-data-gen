@@ -10,8 +10,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
 
-export const useGetProfileReadme = async () => {
-  async function getData() {
+export const useGetProfileReadme = async (): Promise<string[]> => {
+  async function getData(): Promise<string[]> {
     let owner: string = process.env.GITHUB_OWNER ?? ''
     let name: string = process.env.GITHUB_USER ?? ''
     let variables: GetProfileReadmeQueryVariables = {
@@ -41,11 +41,7 @@ export const useGetProfileReadme = async () => {
     return readme
   }
 
-  async function getProfileReadme() {
-    return await getData()
-  }
-
-  return getProfileReadme().catch(e => console.error(e))
+  return await getData()
 }
 
 export default useGetProfileReadme

@@ -11,8 +11,10 @@ dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
 const prLimits = Number.parseInt(process.env.PR_LIMITS ?? '3')
 
-export const useGetMergedPullRequests = async () => {
-  async function getData() {
+export const useGetMergedPullRequests = async (): Promise<
+  SearchResultItemEdge[]
+> => {
+  async function getData(): Promise<SearchResultItemEdge[]> {
     let hasNextPage: boolean = true
     let name: string = process.env.GITHUB_USER ?? ''
     let query: string = `is:merged state:closed author:${name} type:pr`
@@ -58,15 +60,10 @@ export const useGetMergedPullRequests = async () => {
         allMergedPullRequests.slice(0, prLimits)
       )
 
-    // return allMergedPullRequests
     return allMergedPullRequests.slice(0, prLimits)
   }
 
-  async function getMergedPullRequests() {
-    return await getData()
-  }
-
-  return getMergedPullRequests().catch(e => console.error(e))
+  return await getData()
 }
 
 export default useGetMergedPullRequests

@@ -20,7 +20,7 @@ export const useGetRepoCommits = async (
     let after: string = ''
     let variables: GetRepositoryCommitsQueryVariables = {
       owner: owner,
-      name: repo,
+      repo: repo,
       first: first,
       after: null,
     }
@@ -51,7 +51,7 @@ export const useGetRepoCommits = async (
           .endCursor ?? ''
       variables = {
         owner: owner,
-        name: repo,
+        repo: repo,
         first: first,
         after: after,
       }

@@ -11,8 +11,8 @@ dotenv.config()
 const isDebugMode = process.env.DEBUG_MODE == 'true'
 const isIncludePrivateRepos = process.env.INCLUDE_PRIVATE_REPOS == 'true'
 
-export const useGetRepos = async () => {
-  async function getData() {
+export const useGetRepos = async (): Promise<Repository[]> => {
+  async function getData(): Promise<Repository[]> {
     let hasNextPage: boolean = true
     let first: number = Number.parseInt(process.env.RECORD_LIMITS ?? '100')
     let after: string = ''
@@ -47,18 +47,14 @@ export const useGetRepos = async () => {
     return allRepositories
   }
 
-  async function getRepositories() {
-    if (isIncludePrivateRepos)
-      return (await getData()).filter(
-        v => v.isArchived == false && v.isFork == false
-      )
-    else
-      return (await getData()).filter(
-        v => v.isArchived == false && v.isFork == false && v.isPrivate == false
-      )
-  }
-
-  return getRepositories().catch(e => console.error(e))
+  if (isIncludePrivateRepos)
+    return (await getData()).filter(
+      v => v.isArchived == false && v.isFork == false
+    )
+  else
+    return (await getData()).filter(
+      v => v.isArchived == false && v.isFork == false && v.isPrivate == false
+    )
 }
 
 export default useGetRepos
