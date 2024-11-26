@@ -14,6 +14,7 @@ export interface RepositoryConnection {
 
 export interface Repository {
   name: string
+  isFork: boolean
   isPrivate: boolean
 }
 

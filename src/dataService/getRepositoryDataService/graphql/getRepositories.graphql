@@ -4,6 +4,7 @@ query GetRepositories($first: Int, $after: String) {
       totalCount
       nodes {
         name
+        isFork
         isPrivate
       }
       pageInfo {
