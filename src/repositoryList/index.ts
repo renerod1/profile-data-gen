@@ -1,3 +1,4 @@
+import { useGetDefaultBranchRefs } from '../dataService/getDefaultBranchRefDataService'
 import { useGetRepos } from '../dataService/getRepositoryDataService'
 import type { Repository } from '../dataService/getRepositoryDataService/request'
 
@@ -19,4 +20,10 @@ export async function getRepositoryList() {
     .filter(v => exludedRepository.indexOf(v) < 0)
 
   return filteredRepository
+}
+
+export async function getDefaultBranchRef(owner: string, repo: string) {
+  const defaultBranchRef =
+    (await useGetDefaultBranchRefs(owner, repo)) ?? 'main'
+  return defaultBranchRef
 }

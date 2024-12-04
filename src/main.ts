@@ -1,7 +1,7 @@
 import { getHeatmapData } from './commitHeatMap'
 import { getWordCloudData } from './wordCloud'
 import { getRepoCommitsList } from './repositoryCommitList'
-import { getRepositoryList } from './repositoryList'
+import { getDefaultBranchRef, getRepositoryList } from './repositoryList'
 import { vegaCommitHeatmap } from './commitHeatMap/util/vegaCommitHeatMap'
 import { vegaWordCloud } from './wordCloud/util/vegaWordCloud'
 import { generateAnimatedGif } from './animateImages'
@@ -29,6 +29,18 @@ console.log('Get list of Repos - Complete')
 
 if (isDebugMode)
   listOfRepos.map(v => console.log('listOfRepos:', v.toLowerCase()))
+
+if (isDebugMode)
+  listOfRepos.map(async v =>
+    console.log(
+      'owner:',
+      owner,
+      'repo:',
+      v.toLowerCase(),
+      'branch:',
+      await getDefaultBranchRef(owner, v.toLowerCase())
+    )
+  )
 
 //Get all commits per Repos
 const listOfRepoCommits = await getRepoCommitsList(listOfRepos)

@@ -1,4 +1,4 @@
-export interface RepositoryCommitResponse {
+export interface ProfileReadmeResponse {
   repository: {
     object: {
       text: string

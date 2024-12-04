@@ -1,6 +1,6 @@
 import type { PageInfo, PullRequest } from './request'
 
-export interface RepositoryCommitResponse {
+export interface MergedPullRequestResponse {
   search: {
     issueCount: number
     edges: {
