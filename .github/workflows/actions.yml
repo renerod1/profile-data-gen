@@ -6,6 +6,11 @@ on:
       - main
 
   workflow_dispatch:
+    inputs:
+      commit_message:
+        description: 'Message from a triggered repo'
+        required: true
+        default: 'No input provided'
 
 permissions:
   contents: write
