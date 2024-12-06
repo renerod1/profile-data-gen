@@ -44,7 +44,7 @@ export async function vegaCommitHeatmap(
       "title": {
         "enter": {
           "fill": {"value": "white"},
-          "fontSize": {"value": 14}
+          "fontSize": {"value": 24}
         }
       }
     }
@@ -149,19 +149,19 @@ export async function vegaCommitHeatmap(
       "scale": "xscale",
       "title": "Hour of Day",
 	  "titleColor": "white",
-      "titleFontSize": 14,
+      "titleFontSize": 24,
       "labelAngle": 0,
 	  "labelColor": "white",
-      "labelFontSize": 14
+      "labelFontSize": 24
     },
     {
       "orient": "left",
       "scale": "yscale",
       "title": "Day of Week",
 	  "titleColor": "white",
-      "titleFontSize": 14,
+      "titleFontSize": 24,
 	  "labelColor": "white",
-      "labelFontSize": 14
+      "labelFontSize": 24
     }
   ],
 
@@ -171,10 +171,10 @@ export async function vegaCommitHeatmap(
       "type": "gradient",
       "title": "Commit Counts",
 	  "titleColor": "white",
-      "titleFontSize": 14,
+      "titleFontSize": 18,
       "titlePadding": 4,
 	  "labelColor": "white",
-      "labelFontSize": 14,
+      "labelFontSize": 18,
       "gradientLength": {"signal": "height - 16"}
     }
   ],

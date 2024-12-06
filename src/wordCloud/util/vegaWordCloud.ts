@@ -28,7 +28,7 @@ export async function vegaWordCloud(words: string): Promise<void> {
       "title": {
         "enter": {
           "fill": {"value": "white"},
-          "fontSize": {"value": 14}
+          "fontSize": {"value": 24}
         }
       }
     }
