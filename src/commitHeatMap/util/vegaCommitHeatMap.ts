@@ -149,19 +149,19 @@ export async function vegaCommitHeatmap(
       "scale": "xscale",
       "title": "Hour of Day",
 	  "titleColor": "white",
-      "titleFontSize": 24,
+      "titleFontSize": 18,
       "labelAngle": 0,
 	  "labelColor": "white",
-      "labelFontSize": 24
+      "labelFontSize": 18
     },
     {
       "orient": "left",
       "scale": "yscale",
       "title": "Day of Week",
 	  "titleColor": "white",
-      "titleFontSize": 24,
+      "titleFontSize": 18,
 	  "labelColor": "white",
-      "labelFontSize": 24
+      "labelFontSize": 18
     }
   ],
 
