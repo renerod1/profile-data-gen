@@ -1,9 +1,7 @@
 import { githubClient } from '../../client'
-import {
-  type GetDefaultBranchRefsQueryVariables,
-  type GetDefaultBranchRefsQuery,
-  GetDefaultBranchRefs,
-} from '../../types'
+import { GetDefaultBranchRefs } from '../../types'
+import type { DefaultBranchRefsRequest } from './request'
+import type { DefaultBranchRefsResponse } from './response'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -14,7 +12,7 @@ export const useGetDefaultBranchRefs = async (
   repo: string
 ): Promise<string> => {
   async function getData(): Promise<string> {
-    let variables: GetDefaultBranchRefsQueryVariables = {
+    let variables: DefaultBranchRefsRequest = {
       owner: owner,
       repo: repo,
     }
@@ -22,13 +20,13 @@ export const useGetDefaultBranchRefs = async (
 
     if (isDebugMode) console.log(`owner: ${owner}, repo: ${repo}`)
     const result = await githubClient()
-      .query<GetDefaultBranchRefsQuery>({
+      .query<DefaultBranchRefsResponse>({
         query: GetDefaultBranchRefs,
         variables: variables,
       })
       .then(response => response.data)
 
-    defaultBranch = result.repository?.defaultBranchRef?.name ?? ''
+    defaultBranch = result.repository.defaultBranchRef.name ?? ''
 
     if (isDebugMode) console.log('defaultBranch', defaultBranch)
 

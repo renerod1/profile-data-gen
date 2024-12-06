@@ -1,11 +1,4 @@
-export interface Query {
-  repository?: Repository
-}
-
-export interface Repository {
-  object?: Blob
-}
-
-export interface Blob {
-  text?: string
+export interface ProfileReadmeRequest {
+  owner: string
+  name: string
 }

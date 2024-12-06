@@ -1,11 +1,4 @@
-export interface Query {
-  repository?: Repository
-}
-
-export interface Repository {
-  defaultBranchRef?: Ref
-}
-
-export interface Ref {
-  name: string
+export interface DefaultBranchRefsRequest {
+  owner: string
+  repo: string
 }

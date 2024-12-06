@@ -1,10 +1,7 @@
 import { githubClient } from '../../client'
-import {
-  type GetProfileReadmeQueryVariables,
-  type GetProfileReadmeQuery,
-  GetProfileReadme,
-} from '../../types'
-import type { Blob } from './request'
+import { GetProfileReadme } from '../../types'
+import type { ProfileReadmeRequest } from './request'
+import type { ProfileReadmeResponse } from './response'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -14,7 +11,7 @@ export const useGetProfileReadme = async (): Promise<string[]> => {
   async function getData(): Promise<string[]> {
     let owner: string = process.env.GITHUB_OWNER ?? ''
     let name: string = process.env.GITHUB_USER ?? ''
-    let variables: GetProfileReadmeQueryVariables = {
+    let variables: ProfileReadmeRequest = {
       owner: owner,
       name: name,
     }
@@ -22,13 +19,13 @@ export const useGetProfileReadme = async (): Promise<string[]> => {
 
     if (isDebugMode) console.log(`owner: ${owner}, name: ${name}`)
     const result = await githubClient()
-      .query<GetProfileReadmeQuery>({
+      .query<ProfileReadmeResponse>({
         query: GetProfileReadme,
         variables: variables,
       })
       .then(response => response.data)
 
-    const readmeText = (result.repository?.object as Blob).text
+    const readmeText = result.repository?.object?.text
 
     if (isDebugMode) console.log('readmeText:\n', readmeText)
 

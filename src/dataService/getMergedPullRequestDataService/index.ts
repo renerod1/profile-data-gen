@@ -1,10 +1,7 @@
 import { githubClient } from '../../client'
-import {
-  type GetMergedPullRequestsQueryVariables,
-  type GetMergedPullRequestsQuery,
-  GetMergedPullRequests,
-} from '../../types'
-import type { SearchResultItemEdge } from './request'
+import { GetMergedPullRequests } from '../../types'
+import type { MergedPullRequestRequest } from './request'
+import type { MergedPullRequestResponse } from './response'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -12,20 +9,22 @@ const isDebugMode = process.env.DEBUG_MODE == 'true'
 const prLimits = Number.parseInt(process.env.PR_LIMITS ?? '3')
 
 export const useGetMergedPullRequests = async (): Promise<
-  SearchResultItemEdge[]
+  MergedPullRequestResponse['search']['edges']
 > => {
-  async function getData(): Promise<SearchResultItemEdge[]> {
+  async function getData(): Promise<
+    MergedPullRequestResponse['search']['edges']
+  > {
     let hasNextPage: boolean = true
     let name: string = process.env.GITHUB_USER ?? ''
     let query: string = `is:merged state:closed author:${name} type:pr`
     let first: number = Number.parseInt(process.env.RECORD_LIMITS ?? '100')
-    let after: string = ''
-    let variables: GetMergedPullRequestsQueryVariables = {
+    let after: string | null = null
+    let variables: MergedPullRequestRequest = {
       query: query,
       first: first,
-      after: null,
+      after: after,
     }
-    let allMergedPullRequests: SearchResultItemEdge[] = []
+    let allMergedPullRequests: MergedPullRequestResponse['search']['edges'] = []
 
     while (hasNextPage) {
       if (isDebugMode)
@@ -33,19 +32,16 @@ export const useGetMergedPullRequests = async (): Promise<
           `query: ${query}, first: ${first}, after: ${after}, hasNextPage: ${hasNextPage}`
         )
       const result = await githubClient()
-        .query<GetMergedPullRequestsQuery>({
+        .query<MergedPullRequestResponse>({
           query: GetMergedPullRequests,
           variables: variables,
         })
         .then(response => response.data)
 
-      allMergedPullRequests = [
-        ...allMergedPullRequests,
-        ...(result.search.edges as SearchResultItemEdge[]),
-      ]
+      allMergedPullRequests = [...allMergedPullRequests, ...result.search.edges]
 
-      hasNextPage = result.search.pageInfo.hasNextPage
-      after = result.search.pageInfo.endCursor ?? ''
+      hasNextPage = result.search.pageInfo.hasNextPage ?? false
+      after = result.search.pageInfo.endCursor ?? null
       variables = {
         query: query,
         first: first,
