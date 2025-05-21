@@ -17,6 +17,7 @@ export function getWordCloudData(listOfRepoCommits: Commit[]) {
     .replaceAll("'", '')
     .replaceAll('`', '')
     .replaceAll(',', ' ')
+    .replaceAll('\\', '')
 
   if (isDebugMode) console.log('\nwordCloudWords:', wordCloudWords)
 
